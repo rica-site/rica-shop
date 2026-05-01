@@ -1,205 +1,189 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rica Shop - Business Store</title>  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">  <style>
-    *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rica Premium Store</title>
 
-    body{background:#0b0b0b;color:#fff;overflow-x:hidden;}
-
-    header{
-      position:sticky;top:0;z-index:1000;
-      display:flex;justify-content:space-between;align-items:center;
-      padding:18px 40px;
-      background:rgba(10,10,10,0.9);
-      backdrop-filter:blur(10px);
-      border-bottom:1px solid rgba(212,175,55,0.2);
-    }
-
-    .logo{font-size:22px;font-weight:700;color:#d4af37;}
-
-    nav a{color:#fff;margin-left:15px;text-decoration:none;font-weight:500;}
-    nav a:hover{color:#d4af37;}
-
-    .cart-btn{background:#d4af37;color:#000;padding:6px 12px;border-radius:20px;font-weight:700;cursor:pointer;margin-left:15px;}
-
-    .hero{
-      height:90vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
-      background:linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)),url('https://images.unsplash.com/photo-1520975916090-3105956dac38') center/cover;
-    }
-
-    .hero h1{font-size:58px;color:#d4af37;}
-    .hero p{color:#ccc;margin:10px 0 25px;}
-
-    .btn{padding:12px 28px;background:#d4af37;border:none;border-radius:30px;color:#000;font-weight:700;cursor:pointer;text-decoration:none;}
-
-    .section{padding:70px 40px;}
-    .section h2{text-align:center;font-size:34px;margin-bottom:35px;color:#d4af37;}
-
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:25px;}
-
-    .card{background:#171717;border:1px solid rgba(212,175,55,0.2);border-radius:15px;overflow:hidden;text-align:center;transition:0.3s;}
-    .card:hover{transform:translateY(-6px);}
-
-    .card img{width:100%;height:240px;object-fit:cover;}
-
-    .price{color:#d4af37;font-weight:700;}
-
-    .add{background:#d4af37;border:none;padding:8px 14px;margin:10px 0 15px;border-radius:20px;font-weight:700;cursor:pointer;}
-
-    /* CART */
-    .cart{
-      position:fixed;right:20px;top:80px;width:300px;
-      background:#111;border:1px solid #d4af37;padding:15px;
-      display:none;border-radius:10px;max-height:420px;overflow-y:auto;
-    }
-
-    .cart-item{display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px;}
-
-    .remove{background:red;border:none;color:#fff;padding:3px 7px;border-radius:10px;cursor:pointer;}
-
-    .total{margin-top:10px;padding-top:10px;border-top:1px solid #d4af37;font-weight:700;color:#d4af37;}
-
-    .checkout-btn{margin-top:10px;width:100%;background:#d4af37;color:#000;border:none;padding:10px;border-radius:20px;font-weight:800;cursor:pointer;}
-
-    /* CHECKOUT */
-    .checkout{
-      position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
-      background:#111;border:1px solid #d4af37;padding:20px;
-      width:320px;border-radius:10px;display:none;z-index:2000;
-    }
-
-    .checkout input{
-      width:100%;padding:10px;margin:8px 0;background:#000;border:1px solid #333;color:#fff;border-radius:5px;
-    }
-
-    .pay{
-      width:100%;background:#25d366;border:none;padding:10px;border-radius:20px;font-weight:800;color:#000;cursor:pointer;
-    }
-
-    footer{text-align:center;padding:20px;border-top:1px solid rgba(212,175,55,0.2);color:#777;}
-  </style></head>
-<body><header>
-  <div class="logo">RICA BUSINESS STORE</div>
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#shop">Shop</a>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
-    <span class="cart-btn" onclick="toggleCart()">Cart (<span id="count">0</span>)</span>
-  </nav>
-</header><div class="cart" id="cart">
-  <h3>Your Cart</h3>
-  <div id="cartItems"></div>
-  <div class="total" id="total">Total: KSh 0</div>
-  <button class="checkout-btn" onclick="openCheckout()">Checkout</button>
-</div><div class="checkout" id="checkout">
-  <h3 style="color:#d4af37">Business Checkout</h3>
-  <input id="name" placeholder="Full Name" />
-  <input id="phone" placeholder="Phone Number" />
-  <input id="location" placeholder="Delivery Location" />
-  <button class="pay" onclick="placeOrder()">Pay via M-PESA (Simulated)</button>
-</div><section class="hero" id="home">
-  <div>
-    <h1>Build Your Style</h1>
-    <p>Real business-ready fashion store</p>
-    <a class="btn" href="#shop">Start Shopping</a>
-  </div>
-</section><section class="section" id="shop">
-  <h2>Products</h2>
-  <div class="grid" id="products"></div>
-</section><section class="section" id="about">
-  <h2>About Business</h2>
-  <p style="text-align:center;max-width:800px;margin:auto;color:#bbb;">
-    Rica Business Store is a modern e-commerce platform built for selling fashion products online.
-  </p>
-</section><section class="section" id="contact">
-  <h2>Contact</h2>
-  <p style="text-align:center;color:#bbb;">WhatsApp: +254700000000 | Email: sales@rica.com</p>
-</section><footer>© 2026 Rica Business Store</footer><script>
-// PRODUCTS (business system)
-const products = [
-  {name:"Urban Set",price:1500,img:"https://images.unsplash.com/photo-1520975922284-9f2f3c0f4b9e"},
-  {name:"Classic Wear",price:1200,img:"https://images.unsplash.com/photo-1521335629791-ce4aec67dd49"},
-  {name:"Modern Fit",price:2000,img:"https://images.unsplash.com/photo-1520975682031-a3c6a6d9c6e3"},
-  {name:"Street Luxury",price:1800,img:"https://images.unsplash.com/photo-1520975958225-5c0b7b0a4b6d"}
-];
-
-let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-function renderProducts(){
-  let box=document.getElementById('products');
-  box.innerHTML='';
-  products.forEach((p,i)=>{
-    box.innerHTML+=`
-      <div class='card'>
-        <img src='${p.img}' />
-        <h3>${p.name}</h3>
-        <div class='price'>KSh ${p.price}</div>
-        <button class='add' onclick='addToCart(${i})'>Add to Cart</button>
-      </div>
-    `;
-  });
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #f5f5f5;
 }
 
-function addToCart(i){
-  cart.push(products[i]);
-  save();update();
+/* NAV */
+nav {
+    background: black;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
 }
 
-function removeFromCart(i){
-  cart.splice(i,1);
-  save();update();
+/* HERO */
+.hero {
+    text-align: center;
+    padding: 40px;
+    background: white;
 }
 
-function save(){
-  localStorage.setItem('cart',JSON.stringify(cart));
+.btn {
+    padding: 10px 15px;
+    background: black;
+    color: white;
+    border: none;
+    cursor: pointer;
 }
 
-function update(){
-  document.getElementById('count').innerText=cart.length;
-
-  let box=document.getElementById('cartItems');
-  box.innerHTML='';
-  let total=0;
-
-  cart.forEach((item,i)=>{
-    total+=item.price;
-    box.innerHTML+=`
-      <div class='cart-item'>
-        <span>${item.name} - KSh ${item.price}</span>
-        <button class='remove' onclick='removeFromCart(${i})'>X</button>
-      </div>
-    `;
-  });
-
-  document.getElementById('total').innerText='Total: KSh '+total;
+/* PRODUCTS */
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    padding: 20px;
 }
 
-function toggleCart(){
-  let c=document.getElementById('cart');
-  c.style.display=c.style.display==='block'?'none':'block';
+.product {
+    background: white;
+    padding: 15px;
+    text-align: center;
+    border-radius: 10px;
 }
 
-function openCheckout(){
-  document.getElementById('checkout').style.display='block';
+/* CART */
+.cart {
+    background: white;
+    margin: 20px;
+    padding: 15px;
+    border-radius: 10px;
 }
 
-function placeOrder(){
-  let name=document.getElementById('name').value;
-  let phone=document.getElementById('phone').value;
-  let loc=document.getElementById('location').value;
-
-  if(!name||!phone||!loc){alert('Fill all details');return;}
-
-  alert('Order placed successfully! Payment request sent (simulated M-PESA)');
-  cart=[];
-  save();update();
-  document.getElementById('checkout').style.display='none';
-  document.getElementById('cart').style.display='none';
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #ddd;
 }
 
-renderProducts();
-update();
-</script></body>
+.remove {
+    color: red;
+    cursor: pointer;
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 20px;
+    background: black;
+    color: white;
+}
+
+.whatsapp {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: green;
+    color: white;
+    padding: 12px;
+    border-radius: 50px;
+    text-decoration: none;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <div><b>RICA STORE</b></div>
+    <div>Cart (<span id="cartCount">0</span>)</div>
+</nav>
+
+<div class="hero">
+    <h1>Rica Premium Store</h1>
+    <p>Modern Fashion Shop</p>
+</div>
+
+<h2 style="text-align:center;">Products</h2>
+
+<div class="products">
+
+    <div class="product">
+        <h3>T-Shirt</h3>
+        <p>KSh 500</p>
+        <button class="btn" onclick="addToCart('T-Shirt', 500)">Add to Cart</button>
+    </div>
+
+    <div class="product">
+        <h3>Hoodie</h3>
+        <p>KSh 1200</p>
+        <button class="btn" onclick="addToCart('Hoodie', 1200)">Add to Cart</button>
+    </div>
+
+    <div class="product">
+        <h3>Sneakers</h3>
+        <p>KSh 2500</p>
+        <button class="btn" onclick="addToCart('Sneakers', 2500)">Add to Cart</button>
+    </div>
+
+</div>
+
+<!-- CART SECTION -->
+<div class="cart">
+    <h2>Your Cart</h2>
+    <div id="cartItems"></div>
+    <h3>Total: KSh <span id="total">0</span></h3>
+</div>
+
+<footer>
+    WhatsApp: 0727704197<br>
+    © 2026 Rica Premium Store
+</footer>
+
+<a class="whatsapp" href="https://wa.me/254727704197">WhatsApp</a>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+function addToCart(name, price) {
+    cart.push({name, price});
+    saveCart();
+    renderCart();
+}
+
+function removeItem(index) {
+    cart.splice(index, 1);
+    saveCart();
+    renderCart();
+}
+
+function saveCart() {
+    localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+function renderCart() {
+    let cartItems = document.getElementById("cartItems");
+    let total = 0;
+
+    cartItems.innerHTML = "";
+
+    cart.forEach((item, index) => {
+        total += item.price;
+
+        cartItems.innerHTML += `
+            <div class="cart-item">
+                <span>${item.name} - KSh ${item.price}</span>
+                <span class="remove" onclick="removeItem(${index})">Remove</span>
+            </div>
+        `;
+    });
+
+    document.getElementById("total").innerText = total;
+    document.getElementById("cartCount").innerText = cart.length;
+}
+
+renderCart();
+</script>
+
+</body>
 </html>
