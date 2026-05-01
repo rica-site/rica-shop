@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RICA Fashion</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      background: #111;
+      color: white;
+      text-align: center;
+    }
+
+    header {
+      background: black;
+      padding: 15px;
+    }
+
+    .product {
+      background: #1a1a1a;
+      margin: 20px;
+      padding: 15px;
+      display: inline-block;
+      border-radius: 10px;
+    }
+
+    button {
+      background: white;
+      color: black;
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>RICA Fashion Store</h1>
+</header>
+
+<h2>Shop</h2>
+
+<div class="product">
+  <h3>Black Hoodie</h3>
+  <p>KES 2500</p>
+  <button onclick="payNow(2500)">Pay with M-Pesa</button>
+</div>
+
+<script>
+function payNow(amount) {
+    let phone = prompt("Enter phone number (2547XXXXXXXX):");
+
+    fetch("http://127.0.0.1:5000/pay", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            phone: phone,
+            amount: amount
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert("📲 Check your phone for M-Pesa prompt");
+    })
+    .catch(err => {
+        alert("❌ Error");
+    });
+}
+</script>
+
+</body>
+</html>
