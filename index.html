@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rica Luxury Store</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0a0a0a;
+    color: white;
+}
+
+/* NAV */
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 18px 30px;
+    background: black;
+    border-bottom: 1px solid gold;
+    color: gold;
+    letter-spacing: 2px;
+}
+
+/* HERO */
+.hero {
+    height: 75vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: radial-gradient(circle at top, #1a1a1a, #000);
+}
+
+.hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    color: gold;
+    margin: 0;
+}
+
+.hero p {
+    color: #bbb;
+    margin-top: 10px;
+}
+
+.btn {
+    margin-top: 18px;
+    padding: 12px 20px;
+    background: gold;
+    color: black;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* PRODUCTS */
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    padding: 30px;
+}
+
+.product {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,215,0,0.2);
+    padding: 18px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.product h3 {
+    color: gold;
+    font-family: 'Playfair Display', serif;
+}
+
+/* CART */
+.cart {
+    margin: 25px;
+    padding: 20px;
+    border: 1px solid gold;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.05);
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #222;
+}
+
+.remove {
+    color: red;
+    cursor: pointer;
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 20px;
+    border-top: 1px solid gold;
+    color: gold;
+}
+
+/* WHATSAPP */
+.whatsapp {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: gold;
+    color: black;
+    padding: 12px;
+    border-radius: 50px;
+    font-weight: bold;
+    text-decoration: none;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <div><b>RICA LUXURY</b></div>
+    <div>Cart (<span id="cartCount">0</span>)</div>
+</nav>
+
+<div class="hero">
+    <h1>Rica Luxury Store</h1>
+    <p>Premium Fashion • Modern Streetwear • Elegant Design</p>
+    <button class="btn" onclick="scrollToProducts()">View Collection</button>
+</div>
+
+<h2 style="text-align:center; color:gold;">Featured Products</h2>
+
+<div class="products" id="products">
+
+    <div class="product">
+        <h3>Luxury T-Shirt</h3>
+        <p>KSh 500</p>
+        <button class="btn" onclick="addToCart('Luxury T-Shirt', 500)">Add to Cart</button>
+    </div>
+
+    <div class="product">
+        <h3>Premium Hoodie</h3>
+        <p>KSh 1200</p>
+        <button class="btn" onclick="addToCart('Premium Hoodie', 1200)">Add to Cart</button>
+    </div>
+
+    <div class="product">
+        <h3>Designer Sneakers</h3>
+        <p>KSh 2500</p>
+        <button class="btn" onclick="addToCart('Designer Sneakers', 2500)">Add to Cart</button>
+    </div>
+
+</div>
+
+<div class="cart">
+    <h2 style="color:gold;">Your Cart</h2>
+    <div id="cartItems"></div>
+    <h3>Total: KSh <span id="total">0</span></h3>
+</div>
+
+<footer>
+    WhatsApp: 0727704197<br>
+    © 2026 Rica Luxury Store
+</footer>
+
+<a class="whatsapp" href="https://wa.me/254727704197">WhatsApp</a>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+function addToCart(name, price) {
+    cart.push({name, price});
+    saveCart();
+    renderCart();
+}
+
+function removeItem(index) {
+    cart.splice(index, 1);
+    saveCart();
+    renderCart();
+}
+
+function saveCart() {
+    localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+function renderCart() {
+    let cartItems = document.getElementById("cartItems");
+    let total = 0;
+
+    cartItems.innerHTML = "";
+
+    cart.forEach((item, index) => {
+        total += item.price;
+
+        cartItems.innerHTML += `
+            <div class="cart-item">
+                <span>${item.name} - KSh ${item.price}</span>
+                <span class="remove" onclick="removeItem(${index})">Remove</span>
+            </div>
+        `;
+    });
+
+    document.getElementById("total").innerText = total;
+    document.getElementById("cartCount").innerText = cart.length;
+}
+
+function scrollToProducts() {
+    document.getElementById("products").scrollIntoView({behavior: "smooth"});
+}
+
+renderCart();
+</script>
+
+</body>
+</html>
