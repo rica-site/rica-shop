@@ -1,0 +1,14 @@
+let cart = JSON.parse(localStorage.getItem("receipt")) || [];
+let total = localStorage.getItem("total") || 0;
+
+let items = document.getElementById("items");
+
+cart.forEach(item => {
+    items.innerHTML += `
+    <div class="item">
+        <span>${item.name}</span>
+        <span>KSh ${item.price}</span>
+    </div>`;
+});
+
+document.getElementById("total").innerText = total;
